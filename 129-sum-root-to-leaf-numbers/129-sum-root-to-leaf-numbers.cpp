@@ -11,27 +11,21 @@
  */
 class Solution {
 public:
-    void helper(TreeNode *root,int &sum,vector<int>path){
+    int helper(TreeNode *root,int pathsum){
         if(root==NULL){
-            return ;
+            return 0;
         }
-        path.push_back(root->val);
+        pathsum=pathsum*10 + root->val;
         if(root->left==NULL && root->right==NULL){
-            long long tens=1;
-            for(int i=path.size()-1;i>=0;i--){
-                sum+=path[i]*tens;
-                tens=tens*10;
-            }
+            return pathsum;
         }else{
-            helper(root->left,sum,path);
-            helper(root->right,sum,path);
+           return helper(root->left,pathsum) + helper(root->right,pathsum);
         }
         
     }
     int sumNumbers(TreeNode* root) {
-        int sum=0;
-        vector<int> path;
-        helper(root,sum,path);
-        return sum;
+
+       return helper(root,0);
+       
     }
 };
