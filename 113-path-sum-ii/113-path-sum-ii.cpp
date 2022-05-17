@@ -12,7 +12,7 @@
 class Solution {
 public:
     
-    vector<vector<int>> helper(TreeNode *root, int sum, int targetSum,vector<vector<int>> &ans, vector<int> subAns){
+    vector<vector<int>> helper(TreeNode *root, int sum, int targetSum,vector<vector<int>> &ans, vector<int> &subAns){
       
         if(root==NULL){
             return ans;
@@ -25,6 +25,7 @@ public:
             helper(root->left,sum,targetSum,ans,subAns);
             helper(root->right,sum,targetSum,ans,subAns);
         }
+        subAns.pop_back();
         return ans;
         
     }
