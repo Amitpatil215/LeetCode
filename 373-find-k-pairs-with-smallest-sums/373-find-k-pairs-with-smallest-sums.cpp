@@ -21,8 +21,8 @@ public:
                         maxpq.pop();
                         maxpq.push({nums1[i],nums2[j]});
                     }else{
-                        // if we couldn't able to find max sum pair than our top element
-                        // then we can break as we know array are sorted in decresing order
+                        // if we couldn't able to find min sum pair than our top element
+                        // then we can break as we know array are sorted in incresing order
                         break;
                     }
                 }
