@@ -24,7 +24,29 @@ public:
     int numDistinct(string s, string t) {
         int l1=s.size();
         int l2=t.size();
-        vector<vector<int>> dp(l1,vector<int>(l2,-1));
-        return nd(l1-1,l2-1,s,t,dp);
+        string str1 = s;
+        string str2 = t;
+        int mod = (1e9 +7);
+        vector<vector<int>> dp(l1+1 ,vector<int>(l2+1,0));
+        
+        // for base case
+        for(int index1=0;index1<=l1; index1++){
+            //we got our sbsequequence as we are follwoing 1 based indexing in this if index2==0
+            dp[index1][0] = 1;    
+        }
+        
+        for(int index1=1; index1<=l1; index1++){
+            for(int index2=1; index2<=l2; index2++){
+                if(str1[index1-1]==str2[index2-1]){
+                    int take = dp[index1-1][index2-1];
+                    int doNotTake = dp[index1-1][index2];
+                    dp[index1][index2] = (take + doNotTake) % mod; 
+                }else{
+                    dp[index1][index2] = dp[index1-1][index2];
+                }
+                
+            }
+        }
+        return dp[l1][l2];
     }
 };
