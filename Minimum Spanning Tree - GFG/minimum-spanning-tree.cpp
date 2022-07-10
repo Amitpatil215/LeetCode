@@ -25,27 +25,19 @@ class Solution
         vector<int> dist(v,INT_MAX);
         vector<bool> mst(v,false);
         vector<int> parent(v,-1);
+        priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>> minpq;
         
-        int mst_true_count = 0;
         
         dist[0] = 0;
+        minpq.push({0,0});
         // as we gonna be having v-1 edges iterate for that no of times 
-        for(int i=0; i<v-1; i++){
-            //choose minimum dist from dist array and which
-            // is not yet considered in mst
-            int minDist = INT_MAX;
-            int minNode = -1;
-            for(int i=0;i <v; i++){
-                if(!mst[i] && minDist > dist[i]){
-                    minDist = dist[i];
-                    minNode = i;
-                    // cout<<minDist<<endl;
-                }
-            }
-            
+        while(!minpq.empty()){
+            //choose minimum dist from dist array 
+            int minNode = minpq.top().second;
+
+            minpq.pop();
             // consider min node as mst
             mst[minNode] = true;
-            mst_true_count +=1;
             
             // update the distance for its neighbours
             for(auto nbr: adjList[minNode]){
@@ -54,6 +46,7 @@ class Solution
                 if( !mst[nbrNode] && nbrWeight < dist[nbrNode]){
                     dist[nbrNode] =   nbrWeight;
                     parent[nbrNode] = minNode;
+                    minpq.push({nbrWeight, nbrNode});
                 }
             }
             
