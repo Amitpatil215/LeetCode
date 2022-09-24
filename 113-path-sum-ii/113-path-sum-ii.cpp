@@ -11,28 +11,30 @@
  */
 class Solution {
 public:
-    
-    vector<vector<int>> helper(TreeNode *root, int sum, int targetSum,vector<vector<int>> &ans, vector<int> &subAns){
-      
+    void helper(TreeNode* root, int targetSum, int currSum, vector<int>&currAns, vector<vector<int>>&ans){
         if(root==NULL){
-            return ans;
+            return ;
         }
-        sum+=root->val;
-        subAns.push_back(root->val);
-        if(root->left==NULL && root->right==NULL && sum==targetSum){
-            ans.push_back(subAns);
-        }else{
-            helper(root->left,sum,targetSum,ans,subAns);
-            helper(root->right,sum,targetSum,ans,subAns);
+        currSum +=root->val;
+        currAns.push_back(root->val);
+        
+        if(currSum == targetSum  && root->right==NULL && root->left==NULL){
+            ans.push_back(currAns);
         }
-        subAns.pop_back();
-        return ans;
+        helper(root->right, targetSum, currSum, currAns, ans);
+        helper(root->left, targetSum, currSum, currAns, ans);
+        currSum -=root->val;
+        currAns.pop_back();
         
     }
     
     vector<vector<int>> pathSum(TreeNode* root, int targetSum) {
-        vector<vector<int>>ans;
-        vector<int> subAns;
-        return helper(root,0,targetSum,ans,subAns);    
+        vector<vector<int>> ans;
+        if(root==NULL){
+            return ans;
+        }
+        vector<int>currAns;
+        helper(root,targetSum,0,currAns, ans );
+        return ans;
     }
 };
