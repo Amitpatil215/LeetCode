@@ -18,9 +18,15 @@ public:
     bool remove(int val) {
         if (m.find(val) == m.end()) return false;
         int last = nums.back();
+        // update last element index with the index of element we want to remove
         m[last] = m[val];
+        
+        // put last value at the index we want to remove
         nums[m[val]] = last;
+        
+        //remove last element from the array
         nums.pop_back();
+        //also remove from the map
         m.erase(val);
         return true;
     }
